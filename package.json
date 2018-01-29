@@ -14,8 +14,7 @@
     "bootstrap": "^3.3.7",
     "browserify": "^15.2.0",
     "electron-packager": "^10.1.2",
-    "jquery": "^3.3.1",
-    "socket.io-client": "^2.0.4"
+    "jquery": "^3.3.1"
   },
   "license": "GPL-3.0"
 }
