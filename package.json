@@ -1,6 +1,8 @@
 {
   "name": "utakata-desktop",
   "version": "0.0.1",
+  "repository": "https://github.com/pb10001/utakata-desktop.git",
+  "author": "pb10001 <atihsa.mihs.ne.ho.da@gmail.com>",
   "main": "main.js",
   "scripts": {
     "start": "electron .",
@@ -13,6 +15,7 @@
     "angular-route": "^1.6.8",
     "bootstrap": "^3.3.7",
     "browserify": "^15.2.0",
+    "electron": "^1.7.11",
     "electron-packager": "^10.1.2",
     "jquery": "^3.3.1"
   },
