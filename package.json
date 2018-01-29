@@ -1,0 +1,21 @@
+{
+  "name": "utakata-desktop",
+  "version": "0.0.1",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron .",
+    "postinstall": "browserify src/main.js -o js/bundle.js",
+    "pack_win": "electron-packager . utakata --platform=win32 --arch=x64 --overwrite --electron-version=1.7.11",
+    "pack_mac": "electron-packager . utakata --platform=darwin --arch=x64 --overwrite --electron-version=1.7.11"
+  },
+  "dependencies": {
+    "angular": "^1.6.8",
+    "angular-route": "^1.6.8",
+    "bootstrap": "^3.3.7",
+    "browserify": "^15.2.0",
+    "electron-packager": "^10.1.2",
+    "jquery": "^3.3.1",
+    "socket.io-client": "^2.0.4"
+  },
+  "license": "GPL-3.0"
+}
