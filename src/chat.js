@@ -1,34 +1,38 @@
 var $ = require('jquery');
 var http = require('http');
-var puzzleUrl = "https://utakata-umigame.herokuapp.com/puzzles?room=";
+var puzzleUrl = "http://localhost:5000";
+//var puzzleUrl = "https://utakata-umigame.herokuapp.com";
 var crypto = require('crypto');
+function reflectResponse($scope, room,res){
+  let body = '';
+  res.setEncoding('utf8');
+
+  res.on('data', (chunk) => {
+      body += chunk;
+  });
+
+  res.on('end', (res) => {
+    res = JSON.parse(body);
+    console.log(res);
+    var mondai = res.mondai;
+    $scope.mondai = mondai||{sender:"-",content:"クリックして問題文を入力"};
+    if(mondai!=null){
+      $scope.trueAns=mondai.trueAns||"クリックして解説を入力";
+    }
+    else{
+      $scope.trueAns="クリックして解説を入力";
+    }
+    $scope.currentRoom= room;
+    $scope.messages= res.question;
+    $scope.privateMessages = res.chat;
+    $scope.$apply();
+    var elem = document.getElementById('question-area');
+    elem.scrollTop = elem.scrollHeight;
+  });
+}
 function fetchData($scope, room){
-  http.get(puzzleUrl+room, (res) => {
-    let body = '';
-    res.setEncoding('utf8');
-
-    res.on('data', (chunk) => {
-        body += chunk;
-    });
-
-    res.on('end', (res) => {
-      res = JSON.parse(body);
-      console.log(res);
-      var mondai = res.mondai;
-      $scope.mondai = mondai||{sender:"-",content:"クリックして問題文を入力"};
-      if(mondai!=null){
-        $scope.trueAns=mondai.trueAns||"クリックして解説を入力";
-      }
-      else{
-        $scope.trueAns="クリックして解説を入力";
-      }
-      $scope.currentRoom= room;
-      $scope.messages= res.question;
-      $scope.privateMessages = res.chat;
-      $scope.$apply();
-      var elem = document.getElementById('question-area');
-      elem.scrollTop = elem.scrollHeight;
-    });
+  http.get(puzzleUrl+'/puzzles?room='+room, (res) => {
+    reflectResponse($scope, room, res);
   }).on('error', (e) => {
     console.log(e.message); //エラー時
   });
@@ -62,6 +66,33 @@ var chatController = function ($scope, $routeParams) {
   $scope.quit = function quit(){
 	location.href = '/';
   }
+  $scope.sendMondai = function sendMondai(){
+    if(window.confirm('問題文が変更されます。続行しますか？')){
+      http.get(puzzleUrl+"/puzzles/update?name="+$scope.name+"&room="+room+"&content="+$scope.content, (res)=>{
+          //reflectResponse(res);
+      }).on('error', (e) => {
+        console.log(e.message); //エラー時
+      });
+    }
+    else{
+      window.alert('キャンセルしました。')
+    }
+  };
+
+/*  $scope.sendTrueAns = function sendTrueAns(){
+    if(window.confirm('正解が公開されます。続行しますか？')){
+      var data = {
+      type:"trueAns",
+      content:$scope.ansContent
+      }
+      socket.emit("message",data);
+    }
+    else{
+      window.alert('キャンセルしました。')
+    }
+
+  };*/
+
   /*socket.on('connect', function () {
     $scope.setName();
     socket.emit('join',room);
@@ -114,34 +145,6 @@ var chatController = function ($scope, $routeParams) {
   socket.on('redirect', function(msg){
 	location.href = '/';
   });
-  $scope.sendMondai = function sendMondai(){
-    if(window.confirm('問題文が変更されます。続行しますか？')){
-      var data = {
-		  type:"mondai",
-		  content:$scope.content,
-		  created_month: new Date().getMonth()+1,
-		  created_date:new Date().getDate()
-      }
-    socket.emit("message",data);
-    }
-    else{
-      window.alert('キャンセルしました。')
-    }
-  };
-
-  $scope.sendTrueAns = function sendTrueAns(){
-    if(window.confirm('正解が公開されます。続行しますか？')){
-      var data = {
-      type:"trueAns",
-      content:$scope.ansContent
-      }
-      socket.emit("message",data);
-    }
-    else{
-      window.alert('キャンセルしました。')
-    }
-
-  };
 
   $scope.send = function send() {
     var data = {
