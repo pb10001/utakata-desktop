@@ -6,7 +6,7 @@
   "main": "main.js",
   "scripts": {
     "start": "electron .",
-    "postinstall": "browserify src/main.js -o js/bundle.js && uglifyjs -c -o ./js/bundle.min.js --source-map ./js/bundle.js",
+    "postinstall": "browserify src/main.js -o js/bundle.js && uglifyjs -c -o js/bundle.min.js js/bundle.js",
     "pack_win": "electron-packager . utakata --platform=win32 --arch=x64 --overwrite --electron-version=1.7.11",
     "pack_mac": "electron-packager . utakata --platform=darwin --arch=x64 --overwrite --electron-version=1.7.11"
   },
@@ -18,7 +18,7 @@
     "electron": "^1.7.11",
     "electron-packager": "^10.1.2",
     "jquery": "^3.3.1",
-    "uglify-js": "^3.3.9"
+    "uglify-es": "^3.3.9"
   },
   "license": "GPL-3.0"
 }
