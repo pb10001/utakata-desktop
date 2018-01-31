@@ -4,6 +4,7 @@ var puzzleUrl = "http://localhost:5000";
 //var puzzleUrl = "https://utakata-umigame.herokuapp.com";
 var crypto = require('crypto');
 function reflectResponse($scope, room,res){
+  //戻り値を画面に反映する
   let body = '';
   res.setEncoding('utf8');
 
@@ -31,6 +32,7 @@ function reflectResponse($scope, room,res){
   });
 }
 function fetchData($scope, room){
+  //チャット画面を読み込む
   http.get(puzzleUrl+'/puzzles?room='+room, (res) => {
     reflectResponse($scope, room, res);
   }).on('error', (e) => {
@@ -69,7 +71,6 @@ var chatController = function ($scope, $routeParams) {
   $scope.sendMondai = function sendMondai(){
     if(window.confirm('問題文が変更されます。続行しますか？')){
       http.get(puzzleUrl+"/puzzles/update?name="+$scope.name+"&room="+room+"&content="+$scope.content, (res)=>{
-          //reflectResponse(res);
       }).on('error', (e) => {
         console.log(e.message); //エラー時
       });
@@ -79,19 +80,18 @@ var chatController = function ($scope, $routeParams) {
     }
   };
 
-/*  $scope.sendTrueAns = function sendTrueAns(){
+  $scope.sendTrueAns = function sendTrueAns(){
     if(window.confirm('正解が公開されます。続行しますか？')){
-      var data = {
-      type:"trueAns",
-      content:$scope.ansContent
-      }
-      socket.emit("message",data);
+      http.get(puzzleUrl+"/puzzles/update?name="+$scope.name+"&room="+room+"&trueAns="+$scope.ansContent, (res)=>{
+      }).on('error', (e) => {
+        console.log(e.message); //エラー時
+      });
     }
     else{
       window.alert('キャンセルしました。')
     }
 
-  };*/
+  };
 
   /*socket.on('connect', function () {
     $scope.setName();
