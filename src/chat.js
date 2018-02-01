@@ -104,7 +104,6 @@ var chatController = function ($scope, $routeParams) {
   $scope.sendAnswer = function sendAnswer() {
     var id = document.getElementById("ques_id_input").value || 0;
     var answer = $scope.answer;
-    console.log(puzzleUrl + "/puzzles/update?name="+$scope.name+"&room=" + room +"&id="+ id +"&answer=" + answer);
     http.get(puzzleUrl + "/puzzles/update?name="+$scope.name+"&room=" + room +"&id="+ id +"&answer=" + answer, (res)=>{
       $scope.answer = '';
     }).on('error', (e)=> {
@@ -112,6 +111,13 @@ var chatController = function ($scope, $routeParams) {
     });
   };
 
+  $scope.sendPublicMessage = function sendPublicMessage(){
+    http.get(puzzleUrl + "/puzzles/update?name="+ $scope.name + "&room=" + room + "&chat=" + $scope.publicText, (res)=>{
+      $scope.publicText = '';
+    }).on('error', (e)=> {
+      console.log(e.message);
+    });
+  };
   /*socket.on('connect', function () {
     $scope.setName();
     socket.emit('join',room);
