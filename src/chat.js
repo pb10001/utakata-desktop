@@ -95,10 +95,21 @@ var chatController = function ($scope, $routeParams) {
   $scope.send = function send() {
     if($scope.text != ''){
       http.get(puzzleUrl + "/puzzles/update?name="+$scope.name+"&room=" + room + "&question=" + $scope.text, (res)=>{
+        $scope.text = '';
       }).on('error', (e)=> {
         console.log(e.message);
       });
     }
+  };
+  $scope.sendAnswer = function sendAnswer() {
+    var id = document.getElementById("ques_id_input").value || 0;
+    var answer = $scope.answer;
+    console.log(puzzleUrl + "/puzzles/update?name="+$scope.name+"&room=" + room +"&id="+ id +"&answer=" + answer);
+    http.get(puzzleUrl + "/puzzles/update?name="+$scope.name+"&room=" + room +"&id="+ id +"&answer=" + answer, (res)=>{
+      $scope.answer = '';
+    }).on('error', (e)=> {
+      console.log(e.message);
+    });
   };
 
   /*socket.on('connect', function () {
@@ -261,7 +272,7 @@ chatComponent = {
    '         <div class= "row chat-row" ng-repeat="msg in messages">',
      '         <div class="col-xs-12 col-md-7">',
   '              <div class="chat-box">',
-      '            <button class="btn chat-id-button" ng-bind="msg.questionNum" name= "{{msg.id}}" onClick="document.getElementById("id_input").value=this.textContent; document.getElementById("ques_id_input").value = this.name; document.answerForm.answerBox.focus();"></button>',
+      '            <button class="btn chat-id-button" ng-bind="msg.questionNum" name= "{{msg.id}}" onClick="document.getElementById(\'id_input\').value=this.textContent; document.getElementById(\'ques_id_input\').value = this.name; document.answerForm.answerBox.focus();"></button>',
       '            <small class="secondary-text" ng-bind="msg.name"></small>',
     '              <span class="primary-text message-text" ng-bind="msg.text"></span>',
      '           </div>',
