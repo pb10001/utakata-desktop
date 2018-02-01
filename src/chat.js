@@ -92,6 +92,14 @@ var chatController = function ($scope, $routeParams) {
     }
 
   };
+  $scope.send = function send() {
+    if($scope.text != ''){
+      http.get(puzzleUrl + "/puzzles/update?name="+$scope.name+"&room=" + room + "&question=" + $scope.text, (res)=>{
+      }).on('error', (e)=> {
+        console.log(e.message);
+      });
+    }
+  };
 
   /*socket.on('connect', function () {
     $scope.setName();
