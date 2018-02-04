@@ -171,38 +171,6 @@ var chatController = function ($scope, $routeParams) {
 	location.href = '/';
   });
 
-  $scope.send = function send() {
-    var data = {
-      type:"question",
-      question:$scope.text,
-      answer: "waiting an answer"
-    }
-    console.log('Sending message:',data);
-    socket.emit('message', data);
-    $scope.text = '';
-  };
-
-  $scope.sendAnswer = function sendAnswer() {
-    var id = document.getElementById("ques_id_input").value || 0;
-    var data = {
-      type:"answer",
-      answerer: String($scope.name||"Anonymous"),
-      id:id,
-      answer: $scope.answer
-    }
-    console.log('Sending message:',data);
-    socket.emit('message', data);
-    $scope.answer = '';
-  };
-  $scope.sendPublicMessage = function sendPublicMessage(){
-    var data = {
-      type:"publicMessage",
-      content:$scope.publicText
-    }
-    console.log('Sending message:', data);
-    socket.emit('message', data);
-    $scope.publicText='';
-  };
   $scope.sendPrivateMessage = function sendPrivateMessage(){
     var data = {
         type:"privateMessage",
