@@ -6,7 +6,8 @@ Coming soon
 npm
 ## How to build
 ```
-npm install #install packages & create bundle.js by browserify
+#install packages & create bundle.js by browserify
+npm install
 
 #For Windows
 npm run pack_win

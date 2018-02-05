@@ -1,0 +1,23 @@
+module.exports = {
+  template: ['<nav class="navbar navbar-default">',
+  '<div class="container-fluid">',
+			'<div class="navbar-header">',
+				'<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbarEexample7">',
+					'<span class="sr-only">Toggle navigation</span>',
+					'<span class="icon-bar"></span>',
+					'<span class="icon-bar"></span>',
+					'<span class="icon-bar"></span>',
+				'</button>',
+				'<span class="navbar-brand hannari" href="#">',
+					'うたかたウミガメ',
+				'</span>',
+			'</div>',
+			'<div class="collapse navbar-collapse" id="navbarEexample7">',
+				'<ul class="nav navbar-nav">',
+					'<li><a class="item" href="/">ホーム</a></li>',
+				'</ul>',
+			'</div>',
+		'</div>',
+	'</nav>'].join(''),
+  controller:''
+};
